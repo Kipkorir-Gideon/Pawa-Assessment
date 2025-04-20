@@ -6,7 +6,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { debounce } from 'lodash';
 
-export default function Home() {
+const Home = () => {
   const [response, setResponse] = useState(null);
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -53,3 +53,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Home;

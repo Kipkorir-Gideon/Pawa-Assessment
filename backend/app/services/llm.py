@@ -1,6 +1,6 @@
 import httpx
 from fastapi import HTTPException
-from app.config import Config
+from app.config import config
 import logging
 
 logger = logging.getLogger(__name__)
@@ -16,8 +16,16 @@ async def query_llm(question: str) -> str:
         str: Mixtral's response.
     
     Raises:
-        HTTPException: If the API call fails.
+        HTTPException: If the API call fails or configuration is invalid.
     """
+    if not config.LLM_API_URL:
+        logger.error("LLM_API_URL is not set")
+        raise HTTPException(status_code=500, detail="LLM_API_URL is not configured")
+    
+    if not config.LLM_API_KEY:
+        logger.error("LLM_API_KEY is not set")
+        raise HTTPException(status_code=500, detail="LLM_API_KEY is not configured")
+
     try:
         async with httpx.AsyncClient() as client:
             prompt = (
@@ -25,7 +33,7 @@ async def query_llm(question: str) -> str:
                 f"Question: {question} [/INST]"
             )
             response = await client.post(
-                Config.LLM_API_URL,
+                str(config.LLM_API_URL),
                 json={
                     "inputs": prompt,
                     "parameters": {
@@ -36,7 +44,7 @@ async def query_llm(question: str) -> str:
                     }
                 },
                 headers={
-                    "Authorization": f"Bearer {Config.LLM_API_KEY}",
+                    "Authorization": f"Bearer {config.LLM_API_KEY}",
                     "Content-Type": "application/json"
                 },
                 timeout=15.0
@@ -52,5 +60,5 @@ async def query_llm(question: str) -> str:
         logger.error(f"Hugging Face API error: {str(e)}")
         raise HTTPException(status_code=503, detail=f"Failed to connect to Hugging Face API: {str(e)}")
     except Exception as e:
-        logger.error(f"Unexpected error: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
+        logger.error(f"Unexpected error in query_llm: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Unexpected error in query_llm: {str(e)}")

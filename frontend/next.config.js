@@ -13,6 +13,12 @@ const nextConfig = {
       },
     ];
   },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.optimization.minimizer = [];
+    }
+    return config;
+  },
 };
 
 module.exports = nextConfig;

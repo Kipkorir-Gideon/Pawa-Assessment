@@ -77,3 +77,14 @@ async def get_history():
     except Exception as e:
         logger.error(f"Error in get_history: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error in get_history: {str(e)}")
+    
+@router.delete("/history")
+async def clear_history():
+    try:
+        async with aiosqlite.connect("history.db") as db:
+            await db.execute("DELETE FROM queries")
+            await db.commit()
+        return {"message": "History cleared"}
+    except Exception as e:
+        logger.error(f"Error in clear_history: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error in clear_history: {str(e)}")

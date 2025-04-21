@@ -26,7 +26,7 @@ const Home = () => {
 
   const fetchHistory = async () => {
     try {
-      const res = await axios.get('/api/history');
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/history`);
       setHistory(res.data);
     } catch (error) {
       toast.error(error.response?.data?.detail || 'Failed to load history');
@@ -41,7 +41,7 @@ const Home = () => {
     debounce(async (question) => {
       setLoading(true);
       try {
-        const res = await axios.post('/api/query', { question });
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/query`, { question });
         setResponse(res.data);
         toast.success('Query answered successfully')
         await fetchHistory();

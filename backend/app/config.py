@@ -8,6 +8,7 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 class Config(BaseSettings):
+    """Configuration settings for the application"""
     LLM_API_URL: HttpUrl
     LLM_API_KEY: str
     ENVIRONMENT: str = "development"

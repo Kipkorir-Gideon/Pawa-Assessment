@@ -23,8 +23,8 @@ const QueryHistory = ({ history, onResubmit, onClear }) => {
     };
 
     return (
-        <div className='w-full p-4 bg-gray-50 border-t lg:border-t-0 lg:border-l'>
-            <div className="flex justify-between items-center mb-4">
+        <div className='w-full p-4 bg-gray-50 border-t lg:border-t-0 lg:border-l flex flex-col h-screen'>
+            <div className="sticky top-0 bg-gray-50 z-10 pb-2 flex justify-between items-center mb-4">
                 <h2 className='text-xl font-semibold'>Query History</h2>
                 {history.length > 0 && (
                     <button
@@ -48,7 +48,7 @@ const QueryHistory = ({ history, onResubmit, onClear }) => {
                         <p className='text-center text-gray-500'>No more queries.</p>
                     }
                 >
-                    <ul className='space-y-4'>
+                    <ul className='flex-1 overflow-y-auto space-y-4'>
                         {history.map((item, index) => (
                             <li key={index} className='p-3 bg-white rounded shadow-sm'>
                                 <button

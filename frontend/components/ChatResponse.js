@@ -2,10 +2,17 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { ClipLoader } from 'react-spinners';
+import { motion } from 'framer-motion';
 
 const ChatResponse = ({ response, loading }) => {
   return (
-    <div className="mt-4 p-4 bg-white rounded-lg shadow-md">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
+      transition={{ duration: 0.3 }}
+      className="mb-4 p-4 bg-white rounded-lg shadow-md"
+    >
       {loading ? (
         <div className="flex items-center justify-center">
           <ClipLoader size={30} color="#3b82f6" />
@@ -20,7 +27,7 @@ const ChatResponse = ({ response, loading }) => {
       ) : (
         <p className="text-gray-500">No response yet</p>
       )}
-    </div>
+    </motion.div>
   );
 };
 

@@ -11,7 +11,7 @@ import { debounce } from 'lodash';
 axiosRetry(axios, {
   retries: 3,
   retryDelay: (retryCount) => {
-    return retryCount * 1000; // Exponential backoff
+    return retryCount * 1000;
   },
   retryCondition: (error) => {
     return error.response.status === 429 || error.response.status >= 500;
@@ -74,7 +74,7 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col lg:flex-row">
-      <div className="flex-1 p-4 lg:p-8">
+      <div className="flex-1 p-4 lg:p-8 flex flex-col">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
             Query Assistant
@@ -87,8 +87,12 @@ const Home = () => {
             {isHistoryOpen ? 'Hide History' : 'Show History'}
           </button>
         </div>
-        <ChatInput onSubmit={handleQuery} loading={loading} />
-        <ChatResponse response={response} loading={loading} />
+        <div className="sticky top-0 bg-gray-100 z-10 pb-4 shadow-md">
+          <ChatInput onSubmit={handleQuery} loading={loading} />
+        </div>
+        <div className="flex-1 overflow-y-auto">
+          <ChatResponse response={response} loading={loading} />
+        </div>
       </div>
       <div
         className={`lg:w-1/3 lg:block ${isHistoryOpen ? 'block' : 'hidden'} w-full`}

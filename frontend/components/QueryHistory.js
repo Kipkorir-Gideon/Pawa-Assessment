@@ -23,7 +23,7 @@ const QueryHistory = ({ history, onResubmit, onClear }) => {
     };
 
     return (
-        <div className='w-full lg:w-1/3 p-4 bg-gray-50 border-t lg:border-t-0 lg:border-l'>
+        <div className='w-full p-4 bg-gray-50 border-t lg:border-t-0 lg:border-l'>
             <div className="flex justify-between items-center mb-4">
                 <h2 className='text-xl font-semibold'>Query History</h2>
                 {history.length > 0 && (

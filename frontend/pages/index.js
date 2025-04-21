@@ -22,6 +22,7 @@ const Home = () => {
   const [response, setResponse] = useState(null);
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
   const fetchHistory = async () => {
     try {
@@ -67,20 +68,37 @@ const Home = () => {
     }
   };
 
+  const toggleHistory = () => {
+    setIsHistoryOpen(!isHistoryOpen);
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col lg:flex-row">
       <div className="flex-1 p-4 lg:p-8">
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
-          Query Assistant
-        </h1>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+            Query Assistant
+          </h1>
+          <button
+            onClick={toggleHistory}
+            className="lg:hidden px-3 py-1 bg-blue-500 text-white rounded-md"
+            aria-label={isHistoryOpen ? 'Hide history' : 'Show history'}
+          >
+            {isHistoryOpen ? 'Hide History' : 'Show History'}
+          </button>
+        </div>
         <ChatInput onSubmit={handleQuery} loading={loading} />
         <ChatResponse response={response} loading={loading} />
       </div>
-      <QueryHistory
-        history={history}
-        onResubmit={handleResubmit}
-        onClear={handleClearHistory}
-      />
+      <div
+        className={`lg:w-1/3 lg:block ${isHistoryOpen ? 'block' : 'hidden'} w-full`}
+      >
+        <QueryHistory
+          history={history}
+          onResubmit={handleResubmit}
+          onClear={handleClearHistory}
+        />
+      </div>
     </div>
   );
 }

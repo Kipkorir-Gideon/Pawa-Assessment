@@ -4,11 +4,10 @@ A web application that allows users to submit queries to an AI model (Hugging Fa
 
 ## Features
 
-- **Query Submission**: Users can submit questions via a sticky input form and receive AI-generated answers.
+- **Query Submission**: Users can submit questions via an input form and receive AI-generated answers.
 - **Query History**: Past queries and responses are displayed in a scrollable history panel, toggleable on mobile. History is persisted using SQLite.
 - **Responsive Design**: Works on both desktop and mobile devices with a clean, user-friendly interface.
 - **Loading Feedback**: Shows a spinner during query processing and success/error notifications.
-- **Auto-Focus**: The input field is automatically focused on page load and after submission for seamless interaction.
 
 ## Tech Stack
 
@@ -46,7 +45,7 @@ A web application that allows users to submit queries to an AI model (Hugging Fa
 4. **Create a .env file**:
    ```bash
 
-   LLM_API_URL=https://api-inference.huggingface.co/models/mistralai/   Mixtral-8x7B-Instruct-v0.1
+   LLM_API_URL=https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1
    LLM_API_KEY=your-huggingface-api-key
    ENVIRONMENT=development
    ```
@@ -92,7 +91,6 @@ The app will be available at `http://localhost:3000`.
 - Type a question in the input field (e.g., "What is 2+2?") and click "Submit".
 - View the AI's response below the form.
 - Check the query history on the right panel (toggleable on mobile).
-- The input field will auto-focus after each submission for quick follow-up questions.
 
 ## API Endpoints
 - **POST** `/api/query`: Submit a query to the LLM.
@@ -115,7 +113,7 @@ The app will be available at `http://localhost:3000`.
 
   - **Frontend**:
     - `index.js`: Main page managing state and rendering components.
-    - `ChatInput.js`: Handles query input with validation and auto-focus.
+    - `ChatInput.js`: Handles query input with validation.
     - `ChatResponse.js`: Displays responses with markdown formatting and loading animation.
     - `QueryHistory.js`: Shows scrollable query history, toggleable on mobile.
   - **Backend**:
@@ -152,7 +150,7 @@ You can deploy the Query Assistant app using free hosting services like Vercel (
 
 3. **Configure the Service**:
    - Set the root directory to `backend/`.
-   - Runtime: Python.
+   - Runtime: Python3.
    - Build Command: `pip install -r requirements.txt`.
    - Start Command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`.
    - Add environment variables:
